@@ -45,9 +45,9 @@ class PruferApp:
         tk.Label(input_frame, text="Prufer Sequence:").pack(side=tk.LEFT, padx=5)
         self.sequence_entry = tk.Entry(input_frame, width=40)
         self.sequence_entry.pack(side=tk.LEFT, padx=5)
-        self.sequence_entry.insert(0, "2 2 4")
+        #self.sequence_entry.insert(0, "2 2 4")
 
-        self.example_label = tk.Label(input_frame, text="Example: 2 2 4", fg="gray")
+        self.example_label = tk.Label(input_frame, text="Enter prufer sequence, separated with spacing", fg="gray")
         self.example_label.pack(side=tk.LEFT, padx=10)
 
         # Output area
@@ -99,7 +99,7 @@ class PruferApp:
         self.status_label.pack(pady=5)
 
         instr = tk.Label(self.root,
-                         text="💡 ENCODE: Click to add nodes, drag between nodes to add edges | DELETE key to delete",
+                         text=" ENCODE: Click to add nodes, drag between nodes to add edges | DELETE key to delete",
                          fg="gray", font=("Arial", 9))
         instr.pack(pady=5)
 
@@ -139,7 +139,7 @@ class PruferApp:
             self.status_label.config(text="ENCODE mode: Draw a tree on the canvas", fg="blue")
         else:
             self.sequence_entry.config(state=tk.NORMAL)
-            self.example_label.config(text="Example: 2 2 4")
+            self.example_label.config(text="Enter prufer sequence,separated with spacing")
             self.action_btn.config(text="🔽 DECODE", bg="lightgreen")
             self.undo_btn.config(state=tk.DISABLED)
             self.redo_btn.config(state=tk.DISABLED)
@@ -173,8 +173,12 @@ class PruferApp:
 
         # Prepare animation
         self._prepare_encode_animation(adj)
+        self._update_encode_display()  # This will show the complete sequence
 
         self.status_label.config(text=f"Encoded! Use NEXT to see leaf removal", fg="green")
+        if self.animation_steps:
+            self.prev_btn.config(state=tk.NORMAL)
+            #self.next_btn.config(state=tk.DISABLED)
 
     def _prepare_encode_animation(self, adjacency):
         n = len(adjacency)
@@ -274,10 +278,8 @@ class PruferApp:
             highlight_neighbor=neighbor
         )
 
-        # Build partial Prüfer sequence
-        partial = [str(neighbor + 1) for _, neighbor in self.animation_steps[:self.current_step]]
-        self.output_entry.delete(0, tk.END)
-        self.output_entry.insert(0, " ".join(partial))
+        # Building partial prufer sequence returned n-3 instead of n-2
+
 
         total = len(self.animation_steps)
         self.status_label.config(
