@@ -33,9 +33,9 @@ class PruferApp:
         mode_frame.pack(pady=10, fill="x")
 
         self.mode_var = tk.StringVar(value="encode")
-        tk.Radiobutton(mode_frame, text="✏️ ENCODE (Draw Tree)", variable=self.mode_var,
+        tk.Radiobutton(mode_frame, text="✏ ENCODE (Draw Tree)", variable=self.mode_var,
                        value="encode", command=self._on_mode_change).pack(side=tk.LEFT, padx=20)
-        tk.Radiobutton(mode_frame, text="📝 DECODE (Enter Sequence)", variable=self.mode_var,
+        tk.Radiobutton(mode_frame, text=" DECODE (Enter Sequence)", variable=self.mode_var,
                        value="decode", command=self._on_mode_change).pack(side=tk.LEFT, padx=20)
 
         # Input area
@@ -57,7 +57,7 @@ class PruferApp:
         self.output_entry = tk.Entry(output_frame, width=50, font=("Arial", 11, "bold"), fg="green", bg="lightyellow")
         self.output_entry.pack(side=tk.LEFT, padx=5, fill="x", expand=True)
 
-        tk.Button(output_frame, text="📋 COPY", command=self._copy_to_clipboard,
+        tk.Button(output_frame, text=" COPY", command=self._copy_to_clipboard,
                   bg="lightblue").pack(side=tk.LEFT, padx=5)
 
         # Canvas area
@@ -71,7 +71,7 @@ class PruferApp:
         btn_frame = tk.Frame(self.root)
         btn_frame.pack(pady=10)
 
-        self.action_btn = tk.Button(btn_frame, text="🔼 ENCODE", command=self._action,
+        self.action_btn = tk.Button(btn_frame, text=" ENCODE", command=self._action,
                                     bg="lightblue", font=("Arial", 11, "bold"), width=10)
         self.action_btn.pack(side=tk.LEFT, padx=5)
 
@@ -131,7 +131,7 @@ class PruferApp:
         if self.current_mode == "encode":
             self.sequence_entry.config(state=tk.NORMAL)
             self.example_label.config(text="Click on canvas to add nodes. Drag node to node to add edges")
-            self.action_btn.config(text="🔼 ENCODE", bg="lightblue")
+            self.action_btn.config(text=" ENCODE", bg="lightblue")
             self.undo_btn.config(state=tk.NORMAL)
             self.redo_btn.config(state=tk.NORMAL)
             self.drawing_canvas = DrawingCanvas(self.canvas)
@@ -140,7 +140,7 @@ class PruferApp:
         else:
             self.sequence_entry.config(state=tk.NORMAL)
             self.example_label.config(text="Enter prufer sequence,separated with spacing")
-            self.action_btn.config(text="🔽 DECODE", bg="lightgreen")
+            self.action_btn.config(text=" DECODE", bg="lightgreen")
             self.undo_btn.config(state=tk.DISABLED)
             self.redo_btn.config(state=tk.DISABLED)
             self.drawing_canvas = None
